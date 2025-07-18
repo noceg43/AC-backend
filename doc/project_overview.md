@@ -4,7 +4,6 @@ Welcome to the documentation for the AlphaConnect API. This project provides a b
 
 This documentation is divided into the following sections:
 
-*   **[Project Overview](doc/project_overview.md):** A high-level overview of the project, its purpose, and its key features.
 *   **[API Guide](/doc/api_guide.md):** A guide on how to interact with the API, including general principles and information about the available `.rest` files for testing.
 *   **[Lobbies](/doc/lobbies.md):** Detailed documentation for the `lobbies` blueprint, which manages lobbies and their lifecycle.
 *   **[Members](/doc/members.md):** Detailed documentation for the `members` blueprint, which manages user profiles.
