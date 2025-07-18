@@ -150,3 +150,5 @@ If you prefer to run the application directly without Docker:
 ## API Documentation
 
 For API documentation, visit `/api` after starting the application.
+
+For a comprehensive guide to the project, please see the [documentation](doc/project_overview.md).
