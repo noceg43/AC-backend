@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, current_app
 from .resource_blueprint import ResourceBlueprint
-from utilities.log import Logger
+from ..utilities.log import Logger
 from .status_library import status_success, status_error
 import requests
 

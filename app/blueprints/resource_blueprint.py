@@ -2,8 +2,8 @@ from flask import Blueprint, current_app, jsonify, request
 import requests
 from .status_library import status_success, status_error
 from functools import wraps
-from utilities.constants import Constants
-from utilities.log import Logger
+from ..utilities.constants import Constants
+from ..utilities.log import Logger
 
 
 class ResourceBlueprint:

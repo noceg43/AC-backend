@@ -1,9 +1,9 @@
-Flask
-python-dotenv
-requests
-python-dateutil
-gunicorn
-numpy
-scikit-learn
-scipy
+Flask==3.1.1
+python-dotenv==1.1.1
+requests==2.32.4
+python-dateutil==2.9.0.post0
+gunicorn==23.0.0
+numpy==2.3.2
+scikit-learn==1.7.1
+scipy==1.16.1
 schedule==1.2.0

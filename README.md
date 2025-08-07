@@ -1,24 +1,56 @@
 # AC-backend
 
-AC backend is a Flask-based API service that acts as a proxy to [another API service](https://github.com/noceg43/aConnect).
+AC backend is a Flask-based API service that acts as a proxy to another API service. It provides a RESTful interface for managing lobbies, members, questions, and other resources.
 
-## Docker Quick Start Guide
+## Features
 
-### Build the Docker Image
-```bash
-docker build -t ac-backend .
-```
+*   **RESTful API:** A comprehensive API for managing the application's resources.
+*   **Authentication:** Authenticated access to the underlying API service.
+*   **Background Jobs:** A scheduler for running background tasks, such as lobby management.
+*   **Machine Learning:** A matching algorithm for finding suitable matches between members.
+*   **Dockerized:** The application is fully containerized for easy deployment.
 
-### Environment Selection
+## Architecture
 
-The application can run in two modes:
-- **Development** (default): More verbose logging and detailed error messages
-- **Production**: Minimal logging and user-friendly error messages without sensitive details
+The application is built using the Flask web framework and follows the application factory pattern. The main components are:
 
-You can select the environment by setting the `FLASK_ENV` environment variable in the `.env` file.
+*   **Application Factory (`app/__init__.py`):** Creates and configures the Flask application instance.
+*   **Blueprints (`app/blueprints`):** Organizes the application into smaller, reusable components. Each resource has its own blueprint.
+*   **ResourceBlueprint (`app/blueprints/resource_blueprint.py`):** A custom class for creating RESTful blueprints with standard CRUD operations.
+*   **Manager (`app/utilities/manager.py`):** A class for managing the interaction with the external API service.
+*   **Scheduler (`app/utilities/scheduler.py`):** A class for managing background jobs.
+*   **Configuration (`config.py`):** A file for managing the application's configuration for different environments.
 
-### Set Up Environment Variables
-Create a `.env` file with your credentials and the environment mode:
+## Getting Started
+
+### Prerequisites
+
+*   Python 3.8+
+*   Docker (optional)
+
+### Installation
+
+1.  Clone the repository:
+    ```bash
+    git clone https://github.com/your-username/ac-backend.git
+    cd ac-backend
+    ```
+
+2.  Create a virtual environment:
+    ```bash
+    python -m venv env
+    source env/bin/activate
+    ```
+
+3.  Install the dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+### Configuration
+
+Create a `.env` file in the root directory with the following variables:
+
 ```
 URL=http://your-api-url/
 EMAIL=your-email@example.com
@@ -26,127 +58,51 @@ PASSWORD=your-password
 FLASK_ENV=[production|development]
 ```
 
-### Run the Container
+### Running the Application
 
+#### Without Docker
 
-**Option 1: Using environment variables directly**
 ```bash
-docker run -p 5000:5000 \
-  -e URL=http://your-api-url/ \
-  -e EMAIL=your-email@example.com \
-  -e PASSWORD=your-password \
-  -e FLASK_ENV=[production|development] \
-  ac-backend
+flask run
 ```
 
-**Option 2: Using a .env file (recommended)**
+#### With Docker
 
-If your .env file is in the current directory:
-```bash
-# Linux/macOS
-docker run -p 5000:5000 --env-file .env ac-backend
+1.  Build the Docker image:
+    ```bash
+    docker build -t ac-backend .
+    ```
 
-# Windows Command Prompt
-docker run -p 5000:5000 --env-file .env ac-backend
-
-# Windows PowerShell
-docker run -p 5000:5000 --env-file .env ac-backend
-```
-
-If your .env file is in a specific path:
-```bash
-# Linux/macOS
-docker run -p 5000:5000 --env-file /absolute/path/to/.env ac-backend
-
-# Windows
-docker run -p 5000:5000 --env-file /absolute/path/to/.env ac-backend
-```
-
-**For connecting to host services:**
-```bash
-docker run -p 5000:5000 \
-  -e URL=http://host.docker.internal:1111/ \
-  -e EMAIL=your-email@example.com \
-  -e PASSWORD=your-password \
-  --add-host=host.docker.internal:host-gateway \
-  ac-backend
-```
-
-### Quick Examples
-
-If your .env file is at `C:\Users\username\configs\.env`:
-```bash
-docker run -p 5000:5000 --env-file C:\Users\username\configs\.env ac-backend
-```
-
-To run the container in detached mode (background):
-```bash
-docker run -d -p 5000:5000 --env-file C:\Users\username\configs\.env ac-backend
-```
-
-To give the container a name (useful for management):
-```bash
-docker run -d -p 5000:5000 --name my-ac-backend --env-file C:\Users\username\configs\.env ac-backend
-```
-
-To run the container in production mode:
-```bash
-docker run -d -p 5000:5000 --name ac-backend-prod -e FLASK_ENV=production ---env-file C:\Users\username\configs\.env ac-backend
-```
-
-### Container Management
-
-View running containers:
-```bash
-docker ps
-```
-
-Stop the container:
-```bash
-docker stop container_id
-# or if named
-docker stop my-ac-backend
-```
-
-### Access the API
-Once running, access the API at `http://localhost:5000/`
-
-## Development Setup (without Docker)
-
-If you prefer to run the application directly without Docker:
-
-1. Create a virtual environment:
-   ```bash
-   python -m venv env
-   ```
-
-2. Activate the environment:
-   - Windows: `env\Scripts\activate`
-   - Unix/MacOS: `source env/bin/activate`
-
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. Create a `.env` file with the following content:
-   ```
-   URL=http://your-api-url/
-   EMAIL=your-email@example.com
-   PASSWORD=your-password
-   FLASK_ENV=[production|development]
-   ```
-
-
-5. Run the application:
-   ```bash
-   flask run
-   ```
-
-   
-> [!WARNING]  
-> If the variable FLASK_ENV is set on production, the server will not run on windows due to missing dependencies
+2.  Run the Docker container:
+    ```bash
+    docker run -p 5000:5000 --env-file .env ac-backend
+    ```
 
 ## API Documentation
 
-For API documentation, visit `/api` after starting the application.
+The API documentation is available at the `/api/docs` endpoint after starting the application.
+
+### Endpoints
+
+Here is a summary of the available endpoints:
+
+*   **Lobbies:** `/api/v0/collections/lobbies`
+*   **Members:** `/api/v0/collections/members`
+*   **Questions:** `/api/v0/collections/questions`
+*   **Answers:** `/api/v0/collections/answers`
+*   **Question Sets:** `/api/v0/collections/question-sets`
+*   **Matches:** `/api/v0/collections/matches`
+*   **Feedback:** `/api/v0/collections/feedbacks`
+*   **Member Answers:** `/api/v0/collections/member-answers`
+
+For more details on the available endpoints and their usage, please refer to the API documentation at `/api/docs`.
+
+## Running Tests
+
+To run the tests, use the following command:
+
+```bash
+pytest
+```
+
+*(Note: No tests are currently implemented.)*

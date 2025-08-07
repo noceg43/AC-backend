@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, current_app
 from .resource_blueprint import ResourceBlueprint
 from .status_library import status_success, status_error
-from utilities.log import Logger
+from ..utilities.log import Logger
 import requests
 
 # Create a ResourceBlueprint for questions

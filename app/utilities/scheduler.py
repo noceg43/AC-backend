@@ -2,22 +2,9 @@ import schedule
 import time
 import threading
 from datetime import datetime, timezone
-from utilities.log import Logger
+from ..utilities.log import Logger
 import requests
-# Import the matching algorithm
-import sys
-import os
-
-# Add the project root directory to the path to import from ml module
-project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-if project_root not in sys.path:
-    sys.path.insert(0, project_root)
-
-try:
-    from ml.MatchingAlgorithm import AlphaConnectMatcher
-except ImportError as e:
-    print(f"Warning: Could not import MatchingAlgorithm: {e}")
-    AlphaConnectMatcher = None
+from ..ml.MatchingAlgorithm import AlphaConnectMatcher
 
 
 class LobbyScheduler:
